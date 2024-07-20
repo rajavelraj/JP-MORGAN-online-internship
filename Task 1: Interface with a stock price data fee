@@ -1,0 +1,32 @@
+import json
+
+def getdatapoint(quote):
+    stock = quote['stock']
+    bid_price = float(quote['top_bid']['price'])
+    ask_price = float(quote['top_ask']['price'])
+    price = (bid_price + ask_price)/2
+    return stock, bid_price, ask_price, price
+
+def getratio(price_a, price_b):
+    if(price_b==0):
+        return None
+    return price_a/price_b
+
+# Define quotes as a list or array
+quotes = [
+    {'stock': 'ABC', 'top_bid': {'price': '100.0'}, 'top_ask': {'price': '110.0'}},
+    {'stock': 'DEF', 'top_bid': {'price': '200.0'}, 'top_ask': {'price': '210.0'}},
+    # Add more quotes here
+]
+
+price = {}  # Move price dictionary outside the loop
+
+for quote in quotes:
+    stock, bid_price, ask_price, price[stock] = getdatapoint(quote)
+    print("Quote %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price[stock]))
+
+ratio = getratio(price["ABC"], price["DEF"])
+if ratio is not None:
+    print("Ratio %s" % ratio)
+else:
+    print("Ratio is undefined (division by zero)")ask 1: Interface with a stock price data fee
